@@ -7,51 +7,59 @@ class bucketList {
   }
 }
 
-//min slutförda lista, tom ska fyllas med slutförda tasks
-
-let myCompletedBucketList = [];
-
 //min grundlista
 
 let myBucketList = [
-  //en variabel som jag tilldelar en lista av classen bucketlist
+  //en variabel som jag tilldelar en lista av classen bucketlist, mina to dos är objekt pga new framför
   new bucketList("Accomplish a Swedish classic circuit"), //nytt objekt som baseras på mallen i mitt objekt "class" bucketList
   new bucketList("Climb Kebnekaise"),
   new bucketList("Get a diving certification"),
   new bucketList("Learn how to fly"),
 ];
 
+//min slutförda lista, tom ska fyllas med slutförda tasks
+
+let myCompletedBucketList = [];
+
+for (let i = 0; i < myBucketList.length; i++) {
+  addBucketListItem(myBucketList[i]);
+}
+
 //funktion för att addera bucket list items
-
 //hela första raden nedan är min funktion som tar emot en funktionsvariabel(text) vi inte vet om än och skapar upp nya objekt med denna och adderar i min bucketList
-
 function addBucketListItem(bucketList) {
-  // inom parantes behållare av en text jag inte vet om.
   let bucketListBody = document.getElementById("myBucketList");
   let newBucketListLi = document.createElement("li");
 
   bucketListBody.appendChild(newBucketListLi); //lägg in barn till min UL-lista i form av LI-objekt
 
-  newBucketListLi.innerHTML = myToggleButton();
+  newBucketListLi.innerHTML = bucketList.propertyWhat;
+
+  let toggleHtml = myToggleButton();
+  newBucketListLi.appendChild(toggleHtml);
+  // inom parantes behållare av en text jag inte vet om.
 }
 
 function myToggleButton() {
-  let toggleStyling = document.createElement("label");
-  toggleStyling.classList.add("switch");
+  let toggleLabel = document.createElement("label");
   let toggleInput = document.createElement("input");
-  toggleInput.type = checkbox;
   let toggleSpan = document.createElement("span");
-  toggleSpan.classList.add("slider round");
 
-  toggleStyling.appendChild(toggleInput);
-  toggleInput.appendChild(toggleSpan);
+  toggleLabel.classList.add("switch");
+  toggleInput.type = "checkbox";
+  toggleSpan.classList.add("slider");
 
-  return toggleStyling;
+  toggleLabel.appendChild(toggleInput);
+  toggleLabel.appendChild(toggleSpan);
+
+  //document.body.appendChild(toggleLabel);
+
+  return toggleLabel;
 }
 
 //fixa klickhändelse för min toggle – eller ändra till en checkbox
-let toggle = document.getElementById("XXXX");
-saveButton.addEventListener("click", userToggleInput);
+//let toggle = document.getElementById("XXXX");
+//toggle.addEventListener("click", userToggleInput);
 
 function userToggleInput() {
   console.log("togglad");
@@ -60,10 +68,6 @@ function userToggleInput() {
 //det ovan är det jag hårdkodar in i min li i form av en checkbox-toggle
 
 //loop för att lägga ut mina lista
-
-for (let i = 0; i < myBucketList.length; i++) {
-  addBucketListItem(myBucketList[i]);
-}
 
 //klickhändelse för att lägga till något nytt i listan, lyssnar efter id som
 //jag definerat i min HTML på den knappen
@@ -100,12 +104,12 @@ function userAddingBucketTask() {
 document.getElementById("myHeading");
 let headingTag = document.getElementById("myHeading");
 headingTag.innerHTML = "The Ultimate Bucket List";
-headingTag.className = "blue";
+headingTag.classList = "blue";
 
 document.getElementById("mySecondHeading");
 let secondHeadingTag = document.getElementById("mySecondHeading");
 secondHeadingTag.innerHTML = "What's yours? Add along!";
-secondHeadingTag.className = "blue";
+secondHeadingTag.classList = "blue";
 
 document.getElementById("myThirdHeading");
 let thirdHeadingTag = document.getElementById("myThirdHeading");

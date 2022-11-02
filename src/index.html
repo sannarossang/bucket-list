@@ -10,22 +10,17 @@
   </head>
   <body>
     <section class="container">
-      <h1 id="myHeading" class="red">Den ultimata bucket-listan</h1>
-      <ul id="myBucketList">
-        <li>
-          <label class="switch">
-            <input type="checkbox" />
-            <span class="slider"></span> </label
-          >hej
-        </li>
-      </ul>
-      <h2 id="mySecondHeading">Lägg till</h2>
-      <input type="text" id="firstUserText" /><button id="userAddBucket">
-        Add
-      </button>
+      <h1 id="myHeading">Den ultimata bucket-listan</h1>
+      <ul id="myBucketList"></ul>
+      <h2 id="mySecondHeading">Lägg till nya</h2>
+      <input
+        type="text"
+        id="firstUserText"
+        placeholder="my Bucket is..."
+      /><button id="userAddBucket">Add</button>
       <ul id="userText"></ul>
       <h2 id="myThirdHeading">Slutförda</h2>
-      <ul id="userCompletedTasks"></ul>
+      <ul id="completedTasks"></ul>
     </section>
   </body>
 </html>

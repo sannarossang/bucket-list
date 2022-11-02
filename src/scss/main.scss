@@ -5,6 +5,17 @@ body {
   background-color: beige;
 }
 
+.container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+ul {
+  list-style-type: none;
+}
+
 .switch {
   position: relative;
   display: inline-block;

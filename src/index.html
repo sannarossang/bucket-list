@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bucket List</title>
     <link href="scss/main.scss" rel="stylesheet" />
-    <script defer src="js/main.js"></script>
+    <script defer src="js/main.js" type="module"></script>
   </head>
   <body>
     <section class="container">
@@ -15,12 +15,11 @@
       <h2 id="mySecondHeading">Lägg till nya</h2>
       <input
         type="text"
-        id="firstUserText"
-        placeholder="my Bucket is..."
-      /><button id="userAddBucket">Add</button>
-      <ul id="userText"></ul>
+        id="inputBucketListItem"
+        placeholder="The next adventure will be..."
+      /><button id="addingBucketItem">Add</button>
       <h2 id="myThirdHeading">Slutförda</h2>
-      <ul id="completedTasks"></ul>
+      <ul id="completedBucketList"></ul>
     </section>
   </body>
 </html>

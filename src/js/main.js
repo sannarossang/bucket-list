@@ -1,102 +1,91 @@
-class BucketList {
-  constructor(what, checked) {
-    this.propertyWhat = what;
-    this.propertyChecked = checked;
-  }
-}
+import { BucketListItem } from "./bucketlist";
 
-let myBucketList = [
-  new BucketList("Accomplish a Swedish classic circuit", false),
-  new BucketList("Climb Kebnekaise", true),
-  new BucketList("Get a diving certification", false),
-  new BucketList("Learn how to fly", false),
+let myBucketListItems = [
+  new BucketListItem("Accomplish a Swedish classic circuit", false),
+  new BucketListItem("Climb Kebnekaise", true),
+  new BucketListItem("Get a diving certification", true),
+  new BucketListItem("Learn how to fly", false),
+  new BucketListItem("Be Santa Clause", false),
 ];
 
-function appendBucketLists() {
-  let bucketListBody = document.getElementById("myBucketList");
-  bucketListBody.innerHTML = "";
+function printBucketLists() {
+  let mainBucketList = document.getElementById("myBucketList");
+  mainBucketList.innerHTML = "";
 
-  let cbucketListBody = document.getElementById("completedTasks");
-  cbucketListBody.innerHTML = "";
+  let completedBucketList = document.getElementById("completedBucketList");
+  completedBucketList.innerHTML = "";
 
-  for (let i = 0; i < myBucketList.length; i++) {
-    if (myBucketList[i].propertyChecked === true) {
-      console.log("Ska till slutförda listan");
-      addCompleteBucketListItem(myBucketList[i]);
+  for (let i = 0; i < myBucketListItems.length; i++) {
+    if (myBucketListItems[i].checked) {
+      console.log("Skickas till den slutförda listan");
+      addToCompletedBucketList(myBucketListItems[i], completedBucketList);
     } else {
-      console.log("Ska skapas i ej gjorda listan");
-      addBucketListItem(myBucketList[i]);
+      console.log("Skickas till den ej slutförda listan");
+      addToBucketList(myBucketListItems[i], mainBucketList);
     }
   }
 }
 
-function addBucketListItem(bucketList) {
-  let bucketListBody = document.getElementById("myBucketList");
+function addToBucketList(bucketListItem, mainBucketList) {
   let newBucketListLi = document.createElement("li");
+  mainBucketList.appendChild(newBucketListLi);
+  newBucketListLi.innerHTML = bucketListItem.description;
 
-  bucketListBody.appendChild(newBucketListLi);
-
-  newBucketListLi.innerHTML = bucketList.propertyWhat;
-
-  let toggleHTML = createToggleButton(bucketList);
-  newBucketListLi.appendChild(toggleHTML);
+  let toggle = createToggleButton(bucketListItem);
+  newBucketListLi.appendChild(toggle);
 }
 
-function addCompleteBucketListItem(bucketList) {
-  let bucketListBody = document.getElementById("completedTasks");
+function addToCompletedBucketList(bucketListItem, completedBucketList) {
   let newBucketListLi = document.createElement("li");
+  completedBucketList.appendChild(newBucketListLi);
+  newBucketListLi.innerHTML = bucketListItem.description;
 
-  bucketListBody.appendChild(newBucketListLi);
-
-  newBucketListLi.innerHTML = bucketList.propertyWhat;
-
-  let toggleHTML = createToggleButton(bucketList);
-  newBucketListLi.appendChild(toggleHTML);
+  let toggle = createToggleButton(bucketListItem);
+  newBucketListLi.appendChild(toggle);
 }
 
-function createToggleButton(bucketList) {
+function createToggleButton(bucketListItem) {
   let toggleLabel = document.createElement("label");
   let toggleInput = document.createElement("input");
   let toggleSpan = document.createElement("span");
 
   toggleLabel.classList.add("switch");
-  toggleInput.type = "checkbox";
-
-  toggleInput.checked = bucketList.propertyChecked;
-
   toggleSpan.classList.add("slider");
+  toggleInput.type = "checkbox";
+  toggleInput.checked = bucketListItem.checked;
 
   toggleLabel.appendChild(toggleInput);
   toggleLabel.appendChild(toggleSpan);
 
   toggleLabel.addEventListener("click", () => {
-    clickedToggle(bucketList, toggleInput);
+    clickedToggle(bucketListItem, toggleInput);
   });
 
   return toggleLabel;
 }
 
-function clickedToggle(bucketList, toggleInput) {
-  myBucketList.splice(myBucketList.indexOf(bucketList), 1);
-  bucketList.propertyChecked = toggleInput.checked;
-  myBucketList.push(bucketList);
+function clickedToggle(bucketListItem, toggleInput) {
+  let myBucketListIndex = myBucketListItems.indexOf(bucketListItem);
+  myBucketListItems.splice(myBucketListIndex, 1);
+  bucketListItem.checked = toggleInput.checked;
+  myBucketListItems.push(bucketListItem);
 
-  appendBucketLists();
+  printBucketLists();
 }
 
-let saveButton = document.getElementById("userAddBucket");
-saveButton.addEventListener("click", userAddingBucketTask);
-
 function userAddingBucketTask() {
-  let firstInput = document.getElementById("firstUserText");
+  let firstInput = document.getElementById("inputBucketListItem");
 
   if (firstInput.value === "") {
     console.log("denied entrance..");
   } else {
-    myBucketList.push(new BucketList(firstInput.value, false));
-    appendBucketLists();
+    myBucketListItems.push(new BucketListItem(firstInput.value, false));
+    printBucketLists();
   }
 }
+
+let addButton = document.getElementById("addingBucketItem");
+addButton.addEventListener("click", userAddingBucketTask);
 
 document.getElementById("myHeading");
 let headingTag = document.getElementById("myHeading");
@@ -105,10 +94,11 @@ headingTag.classList = "blue";
 
 document.getElementById("mySecondHeading");
 let secondHeadingTag = document.getElementById("mySecondHeading");
-secondHeadingTag.innerHTML = "What's yours? Add along!";
+secondHeadingTag.innerHTML = "What's next? Add along!";
 secondHeadingTag.classList = "blue";
 
 document.getElementById("myThirdHeading");
 let thirdHeadingTag = document.getElementById("myThirdHeading");
-thirdHeadingTag.innerHTML = "Completed! Woop woop!";
-appendBucketLists();
+thirdHeadingTag.innerHTML = "I did it! Woop woop!";
+
+printBucketLists();

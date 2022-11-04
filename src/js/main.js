@@ -1,17 +1,25 @@
 import { BucketListItem } from "./models/bucketlist";
 
-let myBucketListItems = [
-  new BucketListItem("Accomplish a Swedish classic circuit", false),
-  new BucketListItem("Climb Kebnekaise", true),
-  new BucketListItem("Get a diving certification", false),
-  new BucketListItem("Learn how to fly", false),
-  new BucketListItem("Be Santa Clause", false),
-];
+let myBucketListItems = [];
+
+if (localStorage.getItem("allBuckets") === null) {
+  myBucketListItems.push(new BucketListItem("Swedish classic circuit", false));
+  myBucketListItems.push(new BucketListItem("Climb Kebnekaise", true));
+  myBucketListItems.push(new BucketListItem("Diving certification", false));
+  myBucketListItems.push(new BucketListItem("Learn how to fly", false));
+  myBucketListItems.push(new BucketListItem("Be Santa Clause", false));
+} else {
+  let allBucketsFromLS = localStorage.getItem("allBuckets");
+  let allBucketsLS = JSON.parse(allBucketsFromLS);
+  for (let i = 0; i < allBucketsLS.length; i++) {
+    myBucketListItems.push(
+      new BucketListItem(allBucketsLS[i].description, allBucketsLS[i].completed)
+    );
+  }
+}
 
 function printBucketLists() {
-  JSON.parse(localStorage.getItem(myBucketListItems));
   localStorage.setItem("allBuckets", JSON.stringify(myBucketListItems));
-
   let mainBucketList = document.getElementById("myBucketList");
   mainBucketList.innerHTML = "";
 
@@ -19,15 +27,12 @@ function printBucketLists() {
   completedBucketList.innerHTML = "";
 
   for (let i = 0; i < myBucketListItems.length; i++) {
-    if (myBucketListItems[i].checked) {
-      //console.log("Skickas till den slutförda listan");
+    if (myBucketListItems[i].completed) {
       addToCompletedBucketList(myBucketListItems[i], completedBucketList);
     } else {
-      //console.log("Skickas till den ej slutförda listan");
       addToBucketList(myBucketListItems[i], mainBucketList);
     }
   }
-  console.log(myBucketListItems);
 }
 
 function addToBucketList(bucketListItem, mainBucketList) {
@@ -56,9 +61,10 @@ function createToggleButton(bucketListItem) {
 
   toggleLabel.classList.add("switch");
   toggleSpan.classList.add("slider");
+  toggleSpan.classList.add("round");
 
   toggleInput.type = "checkbox";
-  toggleInput.checked = bucketListItem.checked;
+  toggleInput.checked = bucketListItem.completed;
 
   toggleLabel.appendChild(toggleInput);
   toggleLabel.appendChild(toggleSpan);
@@ -73,7 +79,7 @@ function createToggleButton(bucketListItem) {
 function clickedToggle(bucketListItem, toggleInput) {
   let myBucketListIndex = myBucketListItems.indexOf(bucketListItem);
   myBucketListItems.splice(myBucketListIndex, 1);
-  bucketListItem.checked = toggleInput.checked;
+  bucketListItem.completed = toggleInput.checked;
   myBucketListItems.push(bucketListItem);
 
   printBucketLists();
@@ -91,6 +97,29 @@ function userAddingBucketTask() {
 
   firstInput.value = "";
 }
+
+function sortBucketLists() {
+  console.log(myBucketListItems);
+  myBucketListItems.sort((a, b) => {
+    //anropar toLowerCase för att den annars trodde att litet a är efter stort B i ordningen.
+    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare
+    if (a.description.toLowerCase() < b.description.toLowerCase()) {
+      return -1;
+    }
+    if (a.description.toLowerCase() === b.description.toLowerCase()) {
+      return 0;
+    } else {
+      return +1;
+    }
+  });
+  printBucketLists();
+}
+
+let sortOngoingButton = document.getElementById("btn-sort-ongoing");
+sortOngoingButton.addEventListener("click", sortBucketLists);
+
+let sortCompletedButton = document.getElementById("btn-sort-completed");
+sortCompletedButton.addEventListener("click", sortBucketLists);
 
 let addButton = document.getElementById("addingBucketItem");
 addButton.addEventListener("click", userAddingBucketTask);

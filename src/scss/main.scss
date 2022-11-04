@@ -6,7 +6,6 @@ body {
   flex-wrap: wrap;
   justify-content: space-around;
   background-color: beige;
-  margin-top: 5%;
 }
 
 .container {
@@ -32,6 +31,8 @@ li {
 li:hover {
   background-color: #ddc7a0;
   cursor: pointer;
+  border-radius: 25px;
+  padding-left: 10px;
 }
 
 h1,
@@ -43,4 +44,52 @@ h2 {
 
 .completed {
   text-decoration: line-through;
+}
+
+#btn-sort-ongoing {
+  font-family: "Zen Antique", "Courier New", Courier, monospace, serif,
+    sans-serif;
+  background-color: #ddc7a0;
+  border: #ddc7a0;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  border-radius: 25px;
+  padding: 15px;
+}
+
+#btn-sort-completed {
+  font-family: "Zen Antique", "Courier New", Courier, monospace, serif,
+    sans-serif;
+  background-color: #ddc7a0;
+  border: #ddc7a0;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  border-radius: 25px;
+  padding: 15px;
+}
+
+#addingBucketItem {
+  font-family: "Zen Antique", "Courier New", Courier, monospace, serif,
+    sans-serif;
+  background-color: #ddc7a0;
+  border: #ddc7a0;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  border-radius: 25px;
+  padding: 15px;
+}
+
+#inputBucketListItem {
+  font-family: "Zen Antique", "Courier New", Courier, monospace, serif,
+    sans-serif;
+  background-color: white;
+  border: #ddc7a0;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  border-radius: 25px;
+  padding: 15px;
 }

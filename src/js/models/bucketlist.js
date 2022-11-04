@@ -1,6 +1,6 @@
 export class BucketListItem {
-  constructor(description, checked) {
+  constructor(description, completed) {
     this.description = description;
-    this.checked = checked;
+    this.completed = completed;
   }
 }
